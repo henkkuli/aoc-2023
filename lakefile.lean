@@ -19,9 +19,5 @@ lean_exe «day2» where
   root := `Day2
 
 @[default_target]
-lean_exe «aoc-2023» where
-  root := `Main
-  -- Enables the use of the Lean interpreter by the executable (e.g.,
-  -- `runFrontend`) at the expense of increased binary size on Linux.
-  -- Remove this line if you do not need such functionality.
-  supportInterpreter := true
+lean_exe «day3» where
+  root := `Day3

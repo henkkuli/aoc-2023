@@ -1,27 +1,12 @@
 import «Aoc2023»
 
 open Lean
-open Parsec
 
 structure Sample where
   red : Nat
   green : Nat
   blue : Nat
 deriving Repr
-
-
-partial def Parsec.separated.loop (sep : Parsec Unit) (p : Parsec α) (acc : Array α): Parsec (Array α) := do
-  let acc := acc.push $ ←p
-  (sep >>= fun () => loop sep p acc) <|> Parsec.pure acc
-
-def Parsec.separated (sep : Parsec Unit) (p : Parsec α) : Parsec (Array α) :=
-  Parsec.separated.loop sep p #[]
-
-def Nat.parser : Parsec Nat :=
-  Parsec.many1Chars Parsec.digit >>=
-    fun v => match v.toNat? with
-             | none => Parsec.fail s!"Invalid number {v}"
-             | some v => Parsec.pure v
 
 partial def Sample.parser.loop (res : Sample) : Parsec Sample := do
     let count ← Nat.parser
