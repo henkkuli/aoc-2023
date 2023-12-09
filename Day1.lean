@@ -1,15 +1,5 @@
 import «Aoc2023»
 
-partial def readInput : IO (List String) := do
-  let rec loop (stream : IO.FS.Stream) (res : (List String)) : IO (List String) := do
-    let buf ← stream.getLine
-    if buf.isEmpty then
-      pure res
-    else
-      let buf := buf.dropRightWhile Char.isWhitespace
-      loop stream (buf :: res)
-  pure (←loop (←IO.getStdin) List.nil).reverse
-
 def takeDigits (line : String) : List Nat :=
   List.filterMap (fun c => c.toString.toNat?) line.toList
 
