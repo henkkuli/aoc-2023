@@ -11,6 +11,16 @@ partial def readInput : IO (List String) := do
   pure (←loop (←IO.getStdin) List.nil).reverse
 
 
+partial def readAll : IO String := do
+  let rec loop (stream : IO.FS.Stream) (acc : ByteArray) : IO ByteArray := do
+    let buf ← stream.read 1024
+    if buf.isEmpty then
+      pure acc
+    else
+      let acc := acc ++ buf
+      loop stream acc
+  pure $ String.fromUTF8Unchecked (←loop (←IO.getStdin) ByteArray.empty)
+
 def String.splitOnce (s : String) (sep : String) : Option (String × String) :=
   let index := s.findSubstr? sep
   index.map (fun i => (s.extract 0 i.startPos, s.extract i.stopPos s.endPos))

@@ -25,3 +25,7 @@ lean_exe «day3» where
 @[default_target]
 lean_exe «day4» where
   root := `Day4
+
+@[default_target]
+lean_exe «day5» where
+  root := `Day5
